@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
+  Alert,
+  AlertIcon,
   ChakraProvider,
   Container,
+  Select,
   SimpleGrid,
   theme,
   VStack,
@@ -9,41 +12,79 @@ import {
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import TodoCard from './components/TodoCard';
 import TodoForm from './components/TodoForm';
+import TodoSelect from './components/TodoSelect';
 
 const App = () => {
   const [postsData, setPostsData] = useState([
     {
       id: 1,
-      title: 'Post 1',
-      body: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam, ex!',
+      title: 'Заметка 1',
+      body: 'фффффффффффффффф',
     },
     {
       id: 2,
-      title: 'Post 2',
-      body: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam, ex!',
+      title: 'Заметка 2',
+      body: 'кккккккккккккккккккккккккккккк',
     },
     {
       id: 3,
-      title: 'Post 3',
-      body: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam, ex!',
+      title: 'Заметка 3',
+      body: 'ёёёёёёёёёёёёёёёёёёёёёёёёёёёёёёёёёёёёё',
     },
   ]);
+
+  const [filterValue, setFilterValue] = useState({
+    value: 'DEFAULT',
+    reverse: false,
+  });
 
   const addNewPost = newPost => setPostsData([...postsData, newPost]);
   const removePost = postId => {
     setPostsData(postsData.filter(el => el.id !== postId));
   };
 
+  const selectFilterValue = ({ value, reverse }) => {
+    setFilterValue({ value, reverse });
+    if (reverse) {
+      setPostsData(
+        [...postsData]
+          .sort((a, b) => a[value].localeCompare(b[value]))
+          .reverse()
+      );
+    }
+    if (!reverse) {
+      setPostsData(
+        [...postsData].sort((a, b) => a[value].localeCompare(b[value]))
+      );
+    }
+  };
+
   return (
     <ChakraProvider theme={theme}>
       <VStack>
         <ColorModeSwitcher pos="absolute" right={15} top={15} />
-        <Container maxW={'5xl'}>
+        <Container maxW={'5xl'} display="flex" flexDirection={'column'}>
           <TodoForm getNewPost={addNewPost} />
+          <TodoSelect
+            placeholder={'Сортировать'}
+            options={[
+              { name: 'По заголовку', value: 'title' },
+              { name: 'По описанию', value: 'body' },
+            ]}
+            value={filterValue}
+            getCurrentValue={req => selectFilterValue(req)}
+          />
           <SimpleGrid mt={5} mb={5} columns={[1, 2, 3]} gap={30}>
-            {postsData.map(post => (
-              <TodoCard key={post.id} data={post} removeFn={removePost} />
-            ))}
+            {postsData.length ? (
+              postsData.map(post => (
+                <TodoCard key={post.id} data={post} removeFn={removePost} />
+              ))
+            ) : (
+              <Alert status="warning" gridColumn={'span 3'}>
+                <AlertIcon />
+                Заметок пока нет
+              </Alert>
+            )}
           </SimpleGrid>
         </Container>
       </VStack>

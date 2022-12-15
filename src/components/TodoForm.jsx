@@ -15,18 +15,23 @@ const TodoForm = ({ getNewPost }) => {
   const [formError, setFormError] = useState('');
   const [isInvalid, setIsInvalid] = useState({ title: false, body: false });
 
+  const alertStyle = {
+    marginTop: '1rem',
+    borderRadius: '0.375rem',
+  };
+
   const formAttentions = {
     titleFalse: () => {
       setIsInvalid({ ...isInvalid, title: true });
-      setFormError(<Alert>Заполните поле "Заголовок"</Alert>);
+      setFormError('Заполните поле "Заголовок"');
     },
     bodyFalse: () => {
       setIsInvalid({ ...isInvalid, body: true });
-      setFormError(<Alert>Заполните поле "Описание"</Alert>);
+      setFormError('Заполните поле "Описание"');
     },
     fieldsFalse: () => {
       setIsInvalid({ title: true, body: true });
-      setFormError(<Alert>Все поля должны быть заполнены!</Alert>);
+      setFormError('Все поля должны быть заполнены!');
     },
     noAttention: () => {
       setFormError('');
@@ -64,12 +69,12 @@ const TodoForm = ({ getNewPost }) => {
 
   return (
     <Stack as={'form'} spacing={3} marginBlock={10}>
-      {formError}
+      {!formError ? '' : <Alert style={alertStyle}>{formError}</Alert>}
       <Input
         isInvalid={isInvalid.title}
         ref={titleField}
         variant="flushed"
-        placeholder="Title"
+        placeholder="Заголовок"
         value={formValue.title}
         onChange={event => {
           setFormValue({ ...formValue, title: event.target.value });
@@ -80,7 +85,7 @@ const TodoForm = ({ getNewPost }) => {
         isInvalid={isInvalid.body}
         ref={bodyField}
         variant="flushed"
-        placeholder="Description"
+        placeholder="Описание"
         value={formValue.body}
         onChange={event => {
           setFormValue({ ...formValue, body: event.target.value });
@@ -88,7 +93,7 @@ const TodoForm = ({ getNewPost }) => {
         }}
       />
       <Button type="submit" alignSelf={'end'} onClick={createNewPost}>
-        Create Todo
+        Создать заметку
       </Button>
     </Stack>
   );
