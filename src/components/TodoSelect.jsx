@@ -1,5 +1,4 @@
 import { Flex, IconButton, Select } from '@chakra-ui/react';
-import { useState } from 'react';
 import { BsFilterRight } from 'react-icons/bs';
 
 const TodoSelect = ({ getCurrentValue, value, placeholder, options }) => {
@@ -10,7 +9,7 @@ const TodoSelect = ({ getCurrentValue, value, placeholder, options }) => {
     },
   };
   return (
-    <Flex justifyContent={'end'} gap={'10px'}>
+    <Flex flex={['1', '0']} justifyContent={'end'} gap={'10px'}>
       {value.value === 'title' || value.value === 'body' ? (
         <IconButton
           icon={

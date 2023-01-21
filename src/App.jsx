@@ -4,6 +4,10 @@ import {
   AlertIcon,
   ChakraProvider,
   Container,
+  Flex,
+  Input,
+  InputGroup,
+  InputRightElement,
   Select,
   SimpleGrid,
   theme,
@@ -13,6 +17,7 @@ import { ColorModeSwitcher } from './ColorModeSwitcher';
 import TodoCard from './components/TodoCard';
 import TodoForm from './components/TodoForm';
 import TodoSelect from './components/TodoSelect';
+import { FaSearch } from 'react-icons/fa';
 
 const App = () => {
   const [postsData, setPostsData] = useState([
@@ -65,15 +70,25 @@ const App = () => {
         <ColorModeSwitcher pos="absolute" right={15} top={15} />
         <Container maxW={'5xl'} display="flex" flexDirection={'column'}>
           <TodoForm getNewPost={addNewPost} />
-          <TodoSelect
-            placeholder={'Сортировать'}
-            options={[
-              { name: 'По заголовку', value: 'title' },
-              { name: 'По описанию', value: 'body' },
-            ]}
-            value={filterValue}
-            getCurrentValue={req => selectFilterValue(req)}
-          />
+          <Flex wrap={'wrap'} justifyContent={'end'} gap={'25px'}>
+            <InputGroup flex={['auto', , '1']}>
+              <Input placeholder="Поиск" />
+              <InputRightElement
+                color={'var(--chakra-colors-gray-300)'}
+                _dark={{ color: 'var(--chakra-colors-whiteAlpha-200)' }}
+                children={<FaSearch />}
+              />
+            </InputGroup>
+            <TodoSelect
+              placeholder={'Сортировать'}
+              options={[
+                { name: 'По заголовку', value: 'title' },
+                { name: 'По описанию', value: 'body' },
+              ]}
+              value={filterValue}
+              getCurrentValue={req => selectFilterValue(req)}
+            />
+          </Flex>
           <SimpleGrid mt={5} mb={5} columns={[1, 2, 3]} gap={30}>
             {postsData.length ? (
               postsData.map(post => (

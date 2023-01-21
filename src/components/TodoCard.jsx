@@ -12,7 +12,16 @@ const TodoCard = ({ data: { id, title, body }, removeFn }) => {
         bg={'whitesmoke'}
         _dark={{ bg: '#3c4a60', color: 'gray.50' }}
       >
-        {title}
+        {
+          <h3
+            style={{
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {title}
+          </h3>
+        }
         <CloseButton onClick={() => removeFn(id)} />
       </CardHeader>
       <CardBody>{body}</CardBody>
