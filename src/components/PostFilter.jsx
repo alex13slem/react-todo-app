@@ -15,7 +15,7 @@ const PostFilter = ({ filter, setFilter }) => {
         onChange={sort => setFilter({ ...filter, sort: sort })}
         options={[
           { name: 'По заголовку', value: 'title' },
-          { name: 'По описанию', value: 'description' },
+          { name: 'По описанию', value: 'body' },
         ]}
         defaultOption="Сортировать"
       />

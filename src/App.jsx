@@ -17,7 +17,6 @@ function App() {
   const [filter, setFilter] = useState({ sort: '', query: '' });
   const [visibleModal, setVisibleModal] = useState(false);
   // Кастомные хуки
-  console.log(filter.sort, filter.query);
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
   const [fetchPosts, isPostsLoading, postsError] = useFetching(async () => {
     const posts = await PostService.getAll();
