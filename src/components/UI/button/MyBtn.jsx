@@ -1,8 +1,8 @@
-import style from './my-btn.module.scss';
+import cl from './my-btn.module.scss';
 
 const MyBtn = ({ children, ...props }) => {
   return (
-    <button {...props} className={style['my-btn']}>
+    <button {...props} className={[cl['my-btn'], props.className].join(' ')}>
       {children}
     </button>
   );

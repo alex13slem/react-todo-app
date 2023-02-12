@@ -1,0 +1,10 @@
+.pagination-block {
+	margin-block: 10px;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+.current {
+	background: yellowgreen;
+}
