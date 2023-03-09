@@ -1,0 +1,11 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+input.error {
+	border: red 2px solid;
+	&:focus {
+		outline: rgb(218, 0, 0) 1px solid;
+	}
+}

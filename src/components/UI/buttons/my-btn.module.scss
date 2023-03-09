@@ -1,0 +1,23 @@
+.my-btn {
+	display: block;
+	padding: 5px 10px;
+
+	font-family: monospace;
+	font-variant-caps: all-small-caps;
+	font-size: 14px;
+	color: #fff;
+	text-decoration: none;
+
+	border: 1px solid black;
+	background: green;
+
+	cursor: pointer;
+	transition: background 0.3s ease-in-out;
+
+	&:hover {
+		background: rgb(23, 138, 23);
+	}
+	&:disabled {
+		background: rgb(144, 161, 144);
+	}
+}

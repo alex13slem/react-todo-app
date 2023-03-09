@@ -1,0 +1,23 @@
+.white-screen {
+	position: fixed;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ffffff9c;
+	&-enter {
+		opacity: 0;
+	}
+	&-enter-active {
+		opacity: 1;
+		transition: all 500ms ease-in-out;
+	}
+	&-exit {
+		opacity: 1;
+	}
+	&-exit-active {
+		opacity: 0;
+		transition: all 500ms ease-in-out;
+	}
+}
