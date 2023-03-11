@@ -1,32 +1,29 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import cl from './style.module.scss';
 import {PostService} from '../../../API/PostService';
-import {useFetching, useSortedAndSearchedPosts} from '../../../hooks';
+import {useFetching} from '../../../hooks';
 import {getPageCount, getTotalCount} from '../../../utils/pages';
-import PostList from '../../PostList/PostList';
-import MyBtn from '../../UI/buttons/MyBtn';
-import LoadingScreen from '../../UI/loading-screen/LoadingScreen';
-import MyPagination from '../../UI/paginations/MyPagination';
-import {Search, SortSelect} from '../../common';
-import {useModal} from '../../../store/useModal';
-import {usePosts} from '../../../store/usePosts';
-import {ModalCreatePost} from './components';
+import {MyBtn} from '../../UI/buttons';
+import {useModalState} from '../../../store/useModalState';
+import {usePostsState} from '../../../store/usePostsState';
+import {
+  ModalCreatePost,
+  PostsPagination,
+  PostsSearch,
+  PostsSortSelect,
+} from './components';
+import {LoadingScreen} from '../../UI';
+import {PostList} from '../../../components';
 
 export const Posts = () => {
   // Базовые хуки
-  const {posts, setPosts} = usePosts();
-  const {setOpen: setOpenModal} = useModal();
-  const [filter, setFilter] = useState({sort: '', query: ''});
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
-  const [totalPages, setTotalPages] = useState(0);
+  const {setOpen: setOpenModal} = useModalState();
+  const {setPosts} = usePostsState();
+  const {page, limit, setTotalPages} = usePostsState(
+    (state) => state.pagination
+  );
 
   // Кастомные хуки
-  const sortedAndSearchedPosts = useSortedAndSearchedPosts(
-    posts,
-    filter.sort,
-    filter.query
-  );
   const [fetchPosts, isPostsLoading, postsError] = useFetching(
     async (limit, page) => {
       const response = await PostService.getAll(limit, page);
@@ -36,17 +33,9 @@ export const Posts = () => {
     }
   );
 
-  // Функции компонента
-
-  const changePage = (pageNum) => {
-    setPage(pageNum);
-    fetchPosts(limit, pageNum);
-  };
-
-  // useEffect
   useEffect(() => {
     fetchPosts(limit, page);
-  }, []);
+  }, [limit, page]);
   return (
     <section className={cl['sect']}>
       <ModalCreatePost />
@@ -54,11 +43,9 @@ export const Posts = () => {
         Добавить пост
       </MyBtn>
 
-      <Search className={cl['search']} filter={filter} setFilter={setFilter} />
+      <PostsSearch className={cl['search']} />
 
-      <SortSelect
-        filter={filter}
-        setFilter={setFilter}
+      <PostsSortSelect
         options={[
           {name: 'По заголовку', value: 'title'},
           {name: 'По описанию', value: 'body'},
@@ -67,17 +54,9 @@ export const Posts = () => {
 
       {postsError && <pre style={{color: 'red'}}>{postsError}</pre>}
       {isPostsLoading && <LoadingScreen />}
-      <PostList
-        posts={sortedAndSearchedPosts}
-        setPosts={setPosts}
-        title={'Список постов 1'}
-      />
+      <PostList title={'Список постов 1'} />
 
-      <MyPagination
-        totalPages={totalPages}
-        page={page}
-        changePage={changePage}
-      />
+      <PostsPagination />
     </section>
   );
 };

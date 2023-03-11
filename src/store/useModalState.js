@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 
-export const useModal = create((set) => ({
+export const useModalState = create((set) => ({
   open: false,
   setOpen: (bool) => set({open: Boolean(bool)}),
 }));

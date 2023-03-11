@@ -1,2 +1,2 @@
-export * from './useModal';
-export * from './usePosts';
+export * from './useModalState';
+export * from './usePostsState';

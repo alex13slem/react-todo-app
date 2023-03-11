@@ -1,10 +1,10 @@
 import {Modal} from '../../../../common';
-import {PostForm} from '..';
+import {PostsForm} from '..';
 
 export const ModalCreatePost = () => {
   return (
     <Modal wrapperId={'modal-create-post'}>
-      <PostForm />
+      <PostsForm />
     </Modal>
   );
 };

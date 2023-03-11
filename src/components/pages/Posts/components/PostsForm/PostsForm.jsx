@@ -1,13 +1,13 @@
 import {useEffect, useState} from 'react';
-import {useModal, usePosts} from '../../../../../store';
+import {useModalState, usePostsState} from '../../../../../store';
 import {Form} from '../../../../common';
-import MyBtn from '../../../../UI/buttons/MyBtn';
+import {MyBtn} from '../../../../UI/buttons';
 import {MyInput} from '../../../../UI/inputs';
-import cl from './PostForm.module.scss';
+import cl from './PostsForm.module.scss';
 
-export const PostForm = () => {
-  const {posts, setPosts} = usePosts();
-  const {setOpen} = useModal();
+export const PostsForm = () => {
+  const {posts, setPosts} = usePostsState();
+  const {setOpen} = useModalState();
   const [createError, setCreateError] = useState('');
   const [newPostFields, setNewPostFields] = useState({
     title: '',
@@ -40,7 +40,7 @@ export const PostForm = () => {
       newPostFields.body &&
       newPostFields.title &&
       setCreateError('');
-  }, [newPostFields]);
+  }, [newPostFields, createError]);
 
   return (
     <Form className={cl['form']} isError={createError} onSubmit={addNewPost}>

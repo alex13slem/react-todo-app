@@ -1,1 +1,1 @@
-export const formatClassName = (names) => names.filter(Boolean).join(' ');
+export const formatClassName = (...names) => names.filter(Boolean).join(' ');

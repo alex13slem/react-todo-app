@@ -1,8 +1,17 @@
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
-import PostItem from '../PostItem/PostItem';
+import {useSortedAndSearchedPosts} from '../../hooks';
+import {usePostsState} from '../../store';
+import {PostItem} from '../PostItem';
 import cl from './PostList.module.scss';
 
-const PostList = ({posts, setPosts, title}) => {
+export const PostList = ({title}) => {
+  const {posts: postsState, filter, setPosts} = usePostsState();
+  const posts = useSortedAndSearchedPosts(
+    postsState,
+    filter.sort,
+    filter.query
+  );
+
   const removePost = (post) => {
     setPosts([...posts].filter((el) => el.id !== post.id));
   };
@@ -12,7 +21,7 @@ const PostList = ({posts, setPosts, title}) => {
         {posts.length ? title : 'Посты не найдены'}
       </h1>
       <TransitionGroup>
-        {posts.map((post, idx) => (
+        {posts.map((post) => (
           <CSSTransition
             key={post.id}
             classNames={{
@@ -35,5 +44,3 @@ const PostList = ({posts, setPosts, title}) => {
     </>
   );
 };
-
-export default PostList;

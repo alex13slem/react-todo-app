@@ -1,8 +1,9 @@
-import {usePagination} from '../../../hooks/usePagination';
-import MyBtn from '../buttons/MyBtn';
+import {usePagination} from '../../../../hooks/usePagination';
+import {formatClassName} from '../../../../utils/format';
+import {MyBtn} from '../../buttons';
 import cl from './myPagination.module.scss';
 
-const MyPagination = ({totalPages, page, changePage, ...props}) => {
+export const MyPagination = ({totalPages, page, changePage, ...props}) => {
   // const [currentNumber, setCurrentNumber] = useState(1);
   // const getSelectPage = currentNumber => {
   //   setCurrentNumber(currentNumber);
@@ -12,7 +13,7 @@ const MyPagination = ({totalPages, page, changePage, ...props}) => {
   return (
     <div
       {...props}
-      className={[cl['pagination-block'], props.className].join(' ')}
+      className={formatClassName(cl['pagination-block'], props.className)}
     >
       {pagesNums.map((pageNum) => (
         <MyBtn
@@ -26,5 +27,3 @@ const MyPagination = ({totalPages, page, changePage, ...props}) => {
     </div>
   );
 };
-
-export default MyPagination;

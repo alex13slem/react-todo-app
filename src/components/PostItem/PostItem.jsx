@@ -1,7 +1,7 @@
-import MyBtn from '../UI/buttons/MyBtn';
+import {MyBtn} from '../UI/buttons';
 import cl from './PostItem.module.scss';
 
-const PostItem = ({post, number, id, removePost}) => {
+export const PostItem = ({post, number, id, removePost}) => {
   return (
     <div className={cl['post']}>
       <div className={cl['post__content']}>
@@ -19,5 +19,3 @@ const PostItem = ({post, number, id, removePost}) => {
     </div>
   );
 };
-
-export default PostItem;

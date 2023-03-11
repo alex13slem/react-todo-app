@@ -1,8 +1,8 @@
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef} from 'react';
 import {CSSTransition} from 'react-transition-group';
-import {useModal} from '../../../store/useModal';
+import {useModalState} from '../../../store/useModalState';
 import {formatClassName} from '../../../utils/format';
-import ReactPortal from '../../React/ReactPortal';
+import {ReactPortal} from '../../React';
 import cl from './style.module.scss';
 
 export const Modal = ({
@@ -14,7 +14,7 @@ export const Modal = ({
   wrapperId,
 }) => {
   const nodeRef = useRef(null);
-  const {open: isOpen, setOpen} = useModal();
+  const {open: isOpen, setOpen} = useModalState();
 
   useEffect(() => {
     const closeOnEscapeKey = (e) =>
@@ -38,13 +38,13 @@ export const Modal = ({
         nodeRef={nodeRef}
       >
         <div
-          className={formatClassName([cl['backdrop'], classNames.backdrop])}
+          className={formatClassName(cl['backdrop'], classNames.backdrop)}
           onClick={(e) =>
             e.target === nodeRef.current ? setOpen(false) : null
           }
           ref={nodeRef}
         >
-          <div className={formatClassName([cl['window'], classNames.window])}>
+          <div className={formatClassName(cl['window'], classNames.window)}>
             {children}
           </div>
         </div>

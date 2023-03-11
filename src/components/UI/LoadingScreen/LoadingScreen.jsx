@@ -1,7 +1,5 @@
 import cl from './loadingScreen.module.scss';
 
-const LoadingScreen = () => {
+export const LoadingScreen = () => {
   return <div className={cl['white-screen']}></div>;
 };
-
-export default LoadingScreen;
